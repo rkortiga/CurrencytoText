@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency To Text Converter</title>
+</head>
+<body>
+    <div [formGroup]="conversionForm">
+        <h2>Currency to Text Conversion</h2>
+        <input type="text" class="form-control mb-3" placeholder="Enter currency value" formControlName="currencyAmount">
+        <button type="button" (click)="convertCurrencyToText()">Convert</button>
+        <p>{{ conversionResult }}</p>
+    </div>
+</body>
+</html>
