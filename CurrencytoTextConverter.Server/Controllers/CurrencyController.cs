@@ -16,14 +16,14 @@ namespace CurrencytoTextConverter.Server.Controllers
         }
 
         [HttpPost("ConvertToText")]
-        public IActionResult ConvertToText([FromBody] Currency currency)
+        public async Task<IActionResult> ConvertToText([FromBody] Currency currency)
         {
             if (currency == null)
             {
                 return BadRequest("Amount cannot be empty.");
             }
 
-            var textResult = _helper.SliceAmount(currency);
+            var textResult = await _helper.SliceAmount(currency);
 
             return Ok(new { result = textResult });
         }

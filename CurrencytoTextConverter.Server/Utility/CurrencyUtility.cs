@@ -1,19 +1,18 @@
-﻿using CurrencytoTextConverter.Server.Mapping;
+﻿using System;
+using CurrencytoTextConverter.Server.Mapping;
 
 namespace CurrencytoTextConverter.Server.Utility
 {
-    //This utility class contains the logic to convert a currency amount to text.
-    //The MainConverter method is the main method that converts the currency amount to text.
-
     public class CurrencyUtility
     {
         private readonly CurrencyMapping _currencyMapping;
-        public CurrencyUtility(CurrencyMapping currencyMapping) 
+
+        public CurrencyUtility(CurrencyMapping currencyMapping)
         {
             _currencyMapping = currencyMapping;
         }
 
-        public string DecimalConverter(decimal amount)
+        public async Task<string> DecimalConverter(decimal amount)
         {
             var wholeNumber = amount.ToString().Split('.')[0];
             var decimalNumber = amount.ToString().Split('.')[1];
@@ -21,16 +20,16 @@ namespace CurrencytoTextConverter.Server.Utility
 
             if (decimalNumber != "0")
             {
-                result = $"{MainConverter(Convert.ToDecimal(wholeNumber))} and {MainConverter(Convert.ToDecimal(decimalNumber))} cents";
+                result = $"{await MainConverter(Convert.ToDecimal(wholeNumber))} and {await MainConverter(Convert.ToDecimal(decimalNumber))} cents";
             }
             else
             {
-                result = $"{MainConverter(Convert.ToDecimal(wholeNumber))} dollars";
+                result = $"{await MainConverter(Convert.ToDecimal(wholeNumber))} dollars";
             }
             return result;
         }
 
-        public string OnesConverter(decimal amount)
+        public async Task<string> OnesConverter(decimal amount)
         {
             var value = Convert.ToInt32(amount);
             string result = "";
@@ -42,7 +41,7 @@ namespace CurrencytoTextConverter.Server.Utility
             return result;
         }
 
-        public string TensConverter(decimal amount)
+        public async Task<string> TensConverter(decimal amount)
         {
             var value = Convert.ToInt32(amount);
             string result;
@@ -53,12 +52,12 @@ namespace CurrencytoTextConverter.Server.Utility
             }
             else
             {
-                result = TensConverter(value - value % 10) + "-" + OnesConverter(value % 10);
+                result = await TensConverter(value - value % 10) + "-" + await OnesConverter(value % 10);
             }
             return result;
         }
 
-        public string MainConverter(decimal amount)
+        public async Task<string> MainConverter(decimal amount)
         {
             var value = Convert.ToDouble(amount);
             string result = "";
@@ -72,11 +71,11 @@ namespace CurrencytoTextConverter.Server.Utility
                 switch (numLength)
                 {
                     case 1:
-                        result = OnesConverter((decimal)value);
+                        result = await OnesConverter((decimal)value);
                         isFinished = true;
                         break;
                     case 2:
-                        result = TensConverter((decimal)value);
+                        result = await TensConverter((decimal)value);
                         isFinished = true;
                         break;
                     case 3:
@@ -115,11 +114,11 @@ namespace CurrencytoTextConverter.Server.Utility
                 {
                     if (value.ToString()[..position] != "0" && value.ToString()[position..] != "0")
                     {
-                        result = MainConverter(Convert.ToDecimal(value.ToString()[..position])) + " " + placeValue + " " + MainConverter(Convert.ToDecimal(value.ToString()[position..]));
+                        result = await MainConverter(Convert.ToDecimal(value.ToString()[..position])) + " " + placeValue + " " + await MainConverter(Convert.ToDecimal(value.ToString()[position..]));
                     }
                     else
                     {
-                        result = MainConverter(Convert.ToDecimal(value.ToString()[..position])) + " " + MainConverter(Convert.ToDecimal(value.ToString()[position..]));
+                        result = await MainConverter(Convert.ToDecimal(value.ToString()[..position])) + " " + await MainConverter(Convert.ToDecimal(value.ToString()[position..]));
                     }
                 }
 

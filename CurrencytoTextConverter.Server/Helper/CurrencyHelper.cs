@@ -1,4 +1,6 @@
-﻿using CurrencytoTextConverter.Server.Model;
+﻿using System;
+using System.Threading.Tasks;
+using CurrencytoTextConverter.Server.Model;
 using CurrencytoTextConverter.Server.Utility;
 
 namespace CurrencytoTextConverter.Server.Helper
@@ -14,21 +16,20 @@ namespace CurrencytoTextConverter.Server.Helper
             _utility = utility;
         }
 
-        public string SliceAmount(Currency currency)
+        public async Task<string> SliceAmount(Currency currency)
         {
-            string result;
-
             var integerPart = (long)Math.Truncate(currency.Amount);
             var fractionalPart = currency.Amount - integerPart;
 
-            var integerText = _utility.MainConverter(integerPart);
+            var integerText = await _utility.MainConverter(integerPart);
 
             var decimalText = string.Empty;
             if (fractionalPart > 0)
             {
-                decimalText = _utility.DecimalConverter(fractionalPart);
+                decimalText = await _utility.DecimalConverter(fractionalPart);
             }
 
+            string result;
             if (integerPart == 1)
             {
                 result = $"{integerText} dollar {decimalText}";
