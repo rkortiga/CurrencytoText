@@ -1,5 +1,4 @@
-﻿using System;
-using CurrencytoTextConverter.Server.Mapping;
+﻿using CurrencytoTextConverter.Server.Mapping;
 
 namespace CurrencytoTextConverter.Server.Utility
 {
@@ -29,7 +28,7 @@ namespace CurrencytoTextConverter.Server.Utility
             return result;
         }
 
-        public async Task<string> OnesConverter(decimal amount)
+        public Task<string> OnesConverter(decimal amount)
         {
             var value = Convert.ToInt32(amount);
             string result = "";
@@ -38,7 +37,7 @@ namespace CurrencytoTextConverter.Server.Utility
             {
                 result = _currencyMapping.OnesDictionary[value];
             }
-            return result;
+            return Task.FromResult(result);
         }
 
         public async Task<string> TensConverter(decimal amount)

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-
+﻿
 namespace CurrencytoTextConverter.Server.Mapping
 {
     public class CurrencyMapping
