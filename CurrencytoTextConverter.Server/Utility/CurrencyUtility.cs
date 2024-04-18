@@ -2,6 +2,8 @@
 
 namespace CurrencytoTextConverter.Server.Utility
 {
+    //This utility class contains the logic to convert a currency amount to text.
+    //The MainConverter method is the main method that converts the currency amount to text.
     public class CurrencyUtility
     {
         private readonly CurrencyMapping _currencyMapping;
