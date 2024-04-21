@@ -1,10 +1,10 @@
 ﻿using CurrencytoTextConverter.Server.Model;
 using CurrencytoTextConverter.Server.Utility;
-using System.Threading.Tasks;
-using System;
 
 namespace CurrencytoTextConverter.Server.Helper
 {
+	//This helper class contains the SliceAmount method that is used to slice the currency amount into its integer and fractional parts.
+	//It then converts the integer and fractional parts to text using methods from the Utility class.
 	public class CurrencyHelper
 	{
 		private readonly CurrencyUtility _utility;
