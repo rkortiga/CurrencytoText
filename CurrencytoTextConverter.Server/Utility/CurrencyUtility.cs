@@ -110,11 +110,14 @@ namespace CurrencytoTextConverter.Server.Utility
             if (isFinished) return result;
             if (value.ToString(CultureInfo.InvariantCulture)[..position] != "0" && value.ToString(CultureInfo.InvariantCulture)[position..] != "0")
             {
-                result = await MainConverter(Convert.ToDecimal(value.ToString(CultureInfo.InvariantCulture)[..position])) + " " + placeValue + " " + await MainConverter(Convert.ToDecimal(value.ToString(CultureInfo.InvariantCulture)[position..]));
+                result = await MainConverter(Convert.ToDecimal(value.ToString(CultureInfo.InvariantCulture)[..position])) 
+                         + " " + placeValue + " " 
+                         + await MainConverter(Convert.ToDecimal(value.ToString(CultureInfo.InvariantCulture)[position..]));
             }
             else
             {
-                result = await MainConverter(Convert.ToDecimal(value.ToString(CultureInfo.InvariantCulture)[..position])) + " " + await MainConverter(Convert.ToDecimal(value.ToString(CultureInfo.InvariantCulture)[position..]));
+                result = await MainConverter(Convert.ToDecimal(value.ToString(CultureInfo.InvariantCulture)[..position])) 
+                         + " " + await MainConverter(Convert.ToDecimal(value.ToString(CultureInfo.InvariantCulture)[position..]));
             }
             return result;
         }
